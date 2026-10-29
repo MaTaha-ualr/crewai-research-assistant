@@ -1,0 +1,29 @@
+research_task:
+  description: >-
+    Research the topic: {topic}. Today's date is {current_date}. Find three to
+    five useful findings from reliable sources. Prefer official documentation
+    and trustworthy sources. For topics asking for recent, latest, or current
+    information, search for the current year {current_year}; do not add older
+    years to the search unless the topic asks for them. Use source publication
+    dates when available. If the newest results are older than the requested
+    period, say so clearly. For every finding, include the source name,
+    publication date when available, and full URL. Do not invent facts or URLs.
+    If a source cannot be opened or verified, exclude its unsupported claims and
+    say that it was inaccessible. If useful results are unavailable, state that
+    clearly.
+  expected_output: >-
+    Three to five concise findings, each paired with a source name and full URL,
+    or a clear statement that useful research was unavailable.
+
+summary_task:
+  description: >-
+    Summarize the research task provided as context for {topic}. Use only that
+    research; do not search again. Today's date is {current_date}. Remove
+    repetition and irrelevant details. Return key findings, a short conclusion,
+    and source URLs and dates from the research. If its newest source is older
+    than the requested period, state the newest source date and that more recent
+    information was not found. If the findings or sources are insufficient, say
+    so.
+  expected_output: >-
+    A short Markdown report with key findings, a conclusion, and source URLs, or
+    an explicit note that available research is insufficient.
