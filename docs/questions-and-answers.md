@@ -64,7 +64,7 @@ needed and its cost is acceptable.
 ## What happens when the search tool fails?
 
 An Exa request error is caught at the crew boundary and shown as a clear research
-failure with a reminder to check Exa credentials and Ollama availability. If
+failure with a reminder to check the Exa credentials and model API settings. If
 Exa returns no results, the tool returns an explicit no-results message, and
 the task asks the Research Specialist to report that useful evidence was
 unavailable. The CLI also reports an error if the final report is empty or has
@@ -78,8 +78,8 @@ no source URL.
 - Ask for a bounded three-to-five findings and a concise report.
 - Avoid memory, planning, hierarchical managers, and extra verification calls
   unless a demonstrated requirement justifies them.
-- Use the selected local Ollama model for inference; Exa search is a separate
-  hosted API call and may have its own usage cost.
+- Use the selected OpenAI model for inference; Exa search is a separate hosted
+  API call and may have its own usage cost.
 
 ## Does the model answer from memory or from the internet?
 
@@ -92,22 +92,13 @@ read with its source dates, and it should say when newer information was not
 found. The project does not treat the model's own recollection as proof of a
 current fact.
 
-## Does this project need `OPENAI_API_KEY` when using Ollama?
+## Which API keys and model setting does this project need?
 
-No. Both agents are explicitly configured to use the Ollama model selected by
-`MODEL` and the server at `OLLAMA_BASE_URL`. The search tool needs `EXA_API_KEY`.
-For AMP, configure those variables in the deployment settings and point
-`OLLAMA_BASE_URL` to an Ollama server the AMP worker can reach. Do not add an
-OpenAI key unless you intentionally switch to an OpenAI model.
-
-## AMP deployment and local Ollama
-
-Local runs use Ollama at `OLLAMA_BASE_URL`, defaulting to
-`http://localhost:11434`. A hosted AMP worker cannot reach a developer's
-`localhost`; for a hosted deployment, configure `OLLAMA_BASE_URL` to point to an
-Ollama server reachable from the AMP runtime, or select a model endpoint that
-the runtime can access. Store `EXA_API_KEY` and any hosted model credentials in
-AMP's environment-variable settings. Do not upload `.env` or expose keys in Git.
+The active agents use OpenAI. Set `OPENAI_API_KEY` for model inference and
+`MODEL` to the desired supported OpenAI model (the example defaults to
+`gpt-6-luna`). Exa web search separately requires `EXA_API_KEY`. For AMP, add
+these variables in the deployment's environment settings and store the keys as
+secrets. Do not upload `.env` or expose keys in Git.
 
 See the official [CrewAI AMP preparation guide](https://docs-platform.crewai.com/platform/en/guides/prepare-for-deployment)
 and [deployment guide](https://docs-platform.crewai.com/platform/en/guides/deploy-to-amp).

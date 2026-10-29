@@ -7,9 +7,11 @@ answers to the ticket review questions are in
 [docs/questions-and-answers.md](docs/questions-and-answers.md), and concise
 project-specific concept definitions are in [docs/crewai-concepts.md](docs/crewai-concepts.md).
 
-The older examples that mention OpenAI models, Serper, or Flow APIs describe
-those original documentation excerpts; they are not the configuration used by
-this repository. This project uses local Ollama inference and Exa web search.
+The older examples that mention other models, Serper, or Flow APIs describe
+those original documentation excerpts; they are not necessarily the active
+configuration used by this repository. The active project code uses the OpenAI
+model selected by `MODEL` and Exa web search. The original notes and examples
+below are preserved as recorded.
 
 ## Original notes
 

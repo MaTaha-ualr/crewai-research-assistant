@@ -9,8 +9,8 @@ pins dependencies for reproducible builds.
 
 1. Install Python 3.10–3.13 and `uv`.
 2. From the repository root, run `uv lock` to generate or refresh `uv.lock`.
-3. Run `uv sync` and verify a local run using a reachable Ollama server and
-   `EXA_API_KEY` in `.env`.
+3. Copy `.env.example` to `.env`, set `OPENAI_API_KEY` and `EXA_API_KEY`, then
+   run `uv sync` and verify a local run.
 4. Commit and push the project, including `pyproject.toml` and `uv.lock`. Keep
    `.env` out of Git; `.gitignore` excludes it.
 
@@ -19,26 +19,15 @@ pins dependencies for reproducible builds.
 1. Push this repository to GitHub.
 2. Sign in to CrewAI AMP and connect the GitHub repository.
 3. Select this project as the deployment source.
-4. Add `EXA_API_KEY`, `MODEL`, and `OLLAMA_BASE_URL` in the deployment's
-   environment-variable settings. Do not set `OLLAMA_BASE_URL` to localhost
-   unless Ollama runs in the same deployed environment.
+4. Add `OPENAI_API_KEY`, `EXA_API_KEY`, and `MODEL` in the deployment's
+   environment-variable settings. Use `gpt-6-luna` for `MODEL` unless you have
+   selected another supported OpenAI model. Store the API key as a secret.
 5. Deploy, then inspect the deployment logs and run a small topic through the
    deployment interface.
 
 The CLI workflow is also supported by CrewAI: authenticate with `crewai login`
 and create a deployment with `crewai deploy create`. This repository has not
 been deployed to an AMP account.
-
-## Ollama networking requirement
-
-The local default `http://localhost:11434` works only when the Crew is running
-on the same computer as Ollama. A hosted AMP worker's `localhost` points to that
-worker, not to your development PC. For hosted execution, provide an Ollama
-endpoint that AMP can reach and configure `OLLAMA_BASE_URL` accordingly, or use
-another model endpoint reachable from AMP. Keep endpoint credentials in AMP's
-environment settings. Qwen 3.5 4B remains the default model name; DeepSeek R1
-1.5B can be selected with `MODEL=ollama/deepseek-r1:1.5b` when the hosted Ollama
-server has that model available.
 
 ## Project entry points
 

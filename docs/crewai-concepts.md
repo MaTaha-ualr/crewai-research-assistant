@@ -1,7 +1,7 @@
 # CrewAI concepts for this project
 
 This repository uses two agents, two tasks, one sequential Crew, and one search
-tool. Model inference uses the local Ollama model selected by `MODEL`.
+tool. Model inference uses the OpenAI model selected by `MODEL`.
 
 | Concept | Meaning in CrewAI | This project |
 | --- | --- | --- |

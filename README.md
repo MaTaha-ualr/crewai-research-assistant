@@ -3,7 +3,7 @@
 A two-agent CrewAI research assistant. The Research Specialist uses Exa's web
 search API to gather dated findings and source URLs. The Research Summarizer
 receives that research as task context and produces a short report. Both agents
-use a local Ollama model by default: `qwen3.5:4b`.
+use the OpenAI model selected by `MODEL` (default: `gpt-6-luna`).
 
 The repo uses CrewAI's classic Python/YAML project layout, with the project
 metadata and entry point required by CrewAI AMP. Its research and summary
@@ -12,24 +12,18 @@ responsibilities remain in separate agent, task, tool, and crew modules.
 ## Requirements
 
 - Python 3.10 through 3.13 (the CrewAI scaffold currently declares `<3.14`)
-- [Ollama](https://ollama.com/download) installed and running
-- The default `qwen3.5:4b` model pulled into Ollama
+- An OpenAI API key for model inference
 - An Exa API key for web search
 - [uv](https://docs.astral.sh/uv/) for project and lockfile management
 
 ## Local setup
 
-Create `.env` from `.env.example`, then set `EXA_API_KEY`. The model settings
-default to Qwen 3.5 4B at Ollama's local endpoint:
+Create `.env` from `.env.example`, then set `OPENAI_API_KEY` and `EXA_API_KEY`.
+The default model is selected by `MODEL`:
 
 ```powershell
 uv sync
-ollama pull qwen3.5:4b
 ```
-
-Keep Ollama running. You can optionally select DeepSeek R1 1.5B by pulling it
-and setting `MODEL=ollama/deepseek-r1:1.5b` in `.env`. `OLLAMA_BASE_URL` defaults
-to `http://localhost:11434`.
 
 Run a topic:
 
@@ -46,8 +40,8 @@ uv run crewai run
 
 Each run prints the report, source count, and elapsed time. It reports clear
 errors for an empty topic, a failed search/model request, an empty report, or a
-summary without source URLs. Exa search makes an external request; LLM inference
-uses the configured Ollama endpoint.
+summary without source URLs. Exa search and OpenAI model inference make external
+API requests.
 
 ## Run the five-topic experiment
 
@@ -65,7 +59,7 @@ background or multi-hour job.
 pyproject.toml                         # AMP project type, dependencies, entry points
 uv.lock                                # Reproducible dependency lock for AMP
 src/crewai_research_assistant/
-  agents.py                            # Ollama LLM and agent construction
+  agents.py                            # OpenAI LLM and agent construction
   tasks.py                             # Research and summary task construction
   tools.py                             # Exa search tool
   crew.py                              # AMP-compatible @CrewBase and sequential Crew
@@ -88,10 +82,9 @@ not conduct the same search again. See the [architecture](docs/architecture.md),
 
 ## CrewAI AMP
 
-The source layout follows CrewAI's classic Python project structure. The
-deployment process and the hosted Ollama requirement are in
-[docs/amp-deployment.md](docs/amp-deployment.md). AMP must be able to reach the
-configured Ollama endpoint; your local `localhost` is only for local runs.
+The source layout follows CrewAI's classic Python project structure. See
+[docs/amp-deployment.md](docs/amp-deployment.md) for AMP setup and environment
+variables.
 
 ## References
 
@@ -103,9 +96,8 @@ configured Ollama endpoint; your local `localhost` is only for local runs.
 - [CrewAI processes](https://docs.crewai.com/en/concepts/processes)
 - [CrewAI tools](https://docs.crewai.com/en/concepts/tools)
 - [CrewAI LLMs](https://docs.crewai.com/en/concepts/llms)
-- [CrewAI Ollama integration](https://docs.crewai.com/en/learn/llm-connections#ollama)
-- [Ollama Qwen 3.5 model](https://ollama.com/library/qwen3.5)
-- [Ollama DeepSeek R1 model](https://ollama.com/library/deepseek-r1)
+- [OpenAI models](https://developers.openai.com/api/docs/models)
+- [GPT-6 Luna model](https://developers.openai.com/api/docs/models/gpt-6-luna)
 - [Exa Search API](https://exa.ai/docs/reference/search)
 - [Exa Python SDK](https://exa.ai/docs/sdks/python-sdk-specification)
 - [Exa build-with-exa skill](https://github.com/exa-labs/agent-skills/tree/main/skills/build-with-exa)

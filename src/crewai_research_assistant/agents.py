@@ -1,4 +1,4 @@
-"""Local Ollama model configuration for the research agents."""
+"""OpenAI model configuration for the research agents."""
 
 import os
 
@@ -6,10 +6,11 @@ from crewai import Agent, LLM
 
 
 def create_llm() -> LLM:
-    """Create the configured local Ollama LLM."""
+    """Create the configured OpenAI LLM without hardcoding a model in code."""
     return LLM(
-        model=os.getenv("MODEL", "ollama/qwen3.5:4b"),
-        base_url=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434"),
+        model=os.getenv("MODEL", "gpt-6-luna"),
+        api_key=os.getenv("OPENAI_API_KEY"),
+        reasoning_effort="none",
     )
 
 

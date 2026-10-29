@@ -4,7 +4,7 @@ The user supplies a topic through the local CLI or a CrewAI entry point. The
 Research Specialist uses Exa to retrieve current web results with source URLs
 and dates when available. The Research Summarizer receives the research task's
 output as context and writes the final report. Both agents use the configured
-Ollama model.
+OpenAI model selected by `MODEL`.
 
 ```mermaid
 flowchart TD
@@ -19,11 +19,11 @@ flowchart TD
 Agent configuration is in `src/crewai_research_assistant/config/agents.yaml`,
 task instructions and expected outputs are in `config/tasks.yaml`, and the
 `@CrewBase` / sequential process wiring is in `crew.py`. Exa tool construction
-is in `tools.py`; Ollama model configuration is in `agents.py`.
+is in `tools.py`; OpenAI model configuration is in `agents.py`.
 
 ## Internet search and model knowledge
 
-Qwen's language model generates and summarizes text locally. It does not have
+The configured OpenAI model generates and summarizes text. It does not have
 live access to the internet by itself. The Research Specialist calls Exa's
 hosted Search API, and those returned highlights, publication dates, and URLs
 are the live web evidence passed into its task. The prompt asks for current-year

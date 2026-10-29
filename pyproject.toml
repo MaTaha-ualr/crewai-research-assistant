@@ -1,7 +1,7 @@
 [project]
 name = "crewai-research-assistant"
 version = "0.1.0"
-description = "A two-agent CrewAI research assistant using Exa web search and local Ollama models, prepared for AMP deployment"
+description = "A two-agent CrewAI research assistant using Exa web search and OpenAI models, prepared for AMP deployment"
 authors = [{ name = "Taha Mohammed", email = "mataha@ualr.edu" }]
 requires-python = ">=3.10,<3.14"
 dependencies = [

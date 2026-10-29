@@ -12,7 +12,7 @@ TOPICS = [
     "Latest developments in Model Context Protocol (MCP)",
     "CrewAI sequential process and task context",
     "Python environment variables documentation",
-    "Recent Gemini API model updates",
+    "Recent OpenAI API model updates",
     "Exa web search API documentation",
 ]
 REPORT_PATH = Path(__file__).resolve().parents[2] / "results" / "experiment-report.md"
