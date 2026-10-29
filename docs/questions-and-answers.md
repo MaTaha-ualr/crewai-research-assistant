@@ -92,6 +92,14 @@ read with its source dates, and it should say when newer information was not
 found. The project does not treat the model's own recollection as proof of a
 current fact.
 
+## Does this project need `OPENAI_API_KEY` when using Ollama?
+
+No. Both agents are explicitly configured to use the Ollama model selected by
+`MODEL` and the server at `OLLAMA_BASE_URL`. The search tool needs `EXA_API_KEY`.
+For AMP, configure those variables in the deployment settings and point
+`OLLAMA_BASE_URL` to an Ollama server the AMP worker can reach. Do not add an
+OpenAI key unless you intentionally switch to an OpenAI model.
+
 ## AMP deployment and local Ollama
 
 Local runs use Ollama at `OLLAMA_BASE_URL`, defaulting to

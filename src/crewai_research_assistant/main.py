@@ -5,7 +5,6 @@ import json
 import os
 import sys
 import time
-from datetime import date
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -14,26 +13,13 @@ from .crew import ResearchAssistant, create_crew, source_urls
 
 
 def kickoff(inputs: dict | None = None) -> str:
-    """Run the crew with a topic and current-date inputs."""
+    """Run the crew with the research topic as its only input."""
     load_dotenv(Path(__file__).resolve().parents[2] / ".env")
-    values = dict(inputs or {})
-    topic = str(values.get("topic", "")).strip()
+    topic = str((inputs or {}).get("topic", "")).strip()
     if not topic:
         raise ValueError("Please enter a non-empty research topic.")
 
-    today = date.today()
-    values.update(
-        topic=topic,
-        current_date=today.isoformat(),
-        current_year=today.year,
-    )
-    try:
-        result = ResearchAssistant().crew().kickoff(inputs=values)
-    except Exception as exc:
-        raise RuntimeError(
-            "Research failed. Check that Ollama is reachable with the selected model "
-            "and that EXA_API_KEY is valid, then try again."
-        ) from exc
+    result = ResearchAssistant().crew().kickoff(inputs={"topic": topic})
 
     report = str(result.raw).strip()
     if not report:
@@ -72,20 +58,7 @@ def run_research(topic: str) -> str:
 
     load_dotenv(Path(__file__).resolve().parents[2] / ".env")
     crew, summary_task = create_crew()
-    today = date.today()
-    try:
-        result = crew.kickoff(
-            inputs={
-                "topic": cleaned_topic,
-                "current_date": today.isoformat(),
-                "current_year": today.year,
-            }
-        )
-    except Exception as exc:
-        raise RuntimeError(
-            "Research failed. Check that Ollama is reachable with the selected model "
-            "and that EXA_API_KEY is valid, then try again."
-        ) from exc
+    result = crew.kickoff(inputs={"topic": cleaned_topic})
 
     report = str(summary_task.output.raw if summary_task.output else result.raw).strip()
     if not report:
@@ -107,18 +80,14 @@ def main() -> int:
     started_at = time.perf_counter()
     try:
         report = run_research(topic)
-    except (ValueError, RuntimeError) as exc:
-        print(f"Error: {exc}", file=sys.stderr)
+    except Exception as exc:
+        print(f"Error ({type(exc).__name__}): {exc}", file=sys.stderr)
         return 1
 
     print("\n" + report)
     print(f"\nSources found: {len(source_urls(report))}")
     print(f"Elapsed time: {time.perf_counter() - started_at:.1f} seconds")
     return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
 
 
 if __name__ == "__main__":

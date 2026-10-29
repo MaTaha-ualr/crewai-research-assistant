@@ -44,8 +44,7 @@ server has that model available.
 
 - `crewai run` uses `crewai_research_assistant.main:run` and the `RESEARCH_TOPIC`
   environment setting (with a sample topic when unset).
-- `crewai_research_assistant.main:kickoff(inputs)` accepts a `topic` and adds
-  the current date and year before calling the Crew.
+- `crewai_research_assistant.main:kickoff(inputs)` accepts the research `topic`.
 - `run_with_trigger` parses a JSON trigger payload containing a `topic`.
 
 See the official [AMP preparation guide](https://docs-platform.crewai.com/platform/en/guides/prepare-for-deployment)
